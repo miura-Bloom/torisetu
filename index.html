@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>私のトリセツ | フレッシュ青果</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e3f;
+    --green-dark: #147a30;
+    --green-light: #e8f5eb;
+    --green-mid: #d0ecd6;
+    --white: #ffffff;
+    --text: #1a2e1c;
+    --text-light: #4a6b4e;
+    --accent: #f5a623;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--green-light);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* 背景装飾 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,158,63,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(26,158,63,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .login-wrap {
+    width: 90%;
+    max-width: 420px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-area {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .logo-leaf {
+    display: inline-block;
+    width: 56px; height: 56px;
+    background: var(--green);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .logo-leaf::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 2px; height: 28px;
+    background: rgba(255,255,255,0.6);
+  }
+
+  .logo-area h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .logo-area h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 40px rgba(26,158,63,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .card p {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 14px 48px 14px 16px;
+    border: 2px solid var(--green-mid);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text);
+    background: var(--green-light);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    letter-spacing: 0.1em;
+  }
+
+  .input-group input:focus {
+    border-color: var(--green);
+    background: var(--white);
+  }
+
+  .input-group input::placeholder {
+    color: #aac4af;
+    letter-spacing: 0.05em;
+  }
+
+  .eye-btn {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer; padding: 4px;
+    color: var(--text-light);
+    font-size: 18px;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 15px;
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+
+  .btn-login:hover { background: var(--green-dark); }
+  .btn-login:active { transform: scale(0.98); }
+
+  .error-msg {
+    text-align: center;
+    color: #e05a5a;
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+    animation: shake 0.3s ease;
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--text-light);
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="logo-area">
+    <div class="logo-leaf"></div>
+    <h1>株式会社フレッシュ青果</h1>
+    <h2>私のトリセツ</h2>
+  </div>
+
+  <div class="card">
+    <p>このサイトは社内専用です。<br>パスワードを入力してご覧ください。</p>
+    <div class="input-group">
+      <input type="password" id="pw" placeholder="パスワード" autocomplete="off">
+      <button class="eye-btn" onclick="togglePw()" title="表示/非表示">👁</button>
+    </div>
+    <button class="btn-login" onclick="login()">ログイン</button>
+    <p class="error-msg" id="err">パスワードが違います</p>
+  </div>
+
+  <p class="footer-note">© ブルーム社会保険労務士事務所</p>
+</div>
+
+<script>
+  const PASSWORD = 'fresh26';
+
+  document.getElementById('pw').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+
+  function login() {
+    const val = document.getElementById('pw').value;
+    if (val === PASSWORD) {
+      sessionStorage.setItem('auth', '1');
+      window.location.href = 'list.html';
+    } else {
+      const err = document.getElementById('err');
+      err.style.display = 'block';
+      err.style.animation = 'none';
+      setTimeout(() => err.style.animation = 'shake 0.3s ease', 10);
+      document.getElementById('pw').value = '';
+      document.getElementById('pw').focus();
+    }
+  }
+
+  function togglePw() {
+    const inp = document.getElementById('pw');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+</script>
+</body>
+</html>

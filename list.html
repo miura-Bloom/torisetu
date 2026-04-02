@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>メンバー一覧 | 私のトリセツ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e3f;
+    --green-dark: #147a30;
+    --green-light: #e8f5eb;
+    --green-mid: #c8e6ce;
+    --white: #ffffff;
+    --text: #1a2e1c;
+    --text-light: #4a6b4e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--green-light);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  header {
+    background: var(--green);
+    color: var(--white);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(26,158,63,0.3);
+  }
+
+  .header-leaf {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    flex-shrink: 0;
+  }
+
+  header h1 {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+  }
+
+  header small {
+    font-size: 11px;
+    opacity: 0.8;
+    display: block;
+    font-weight: 400;
+  }
+
+  .search-wrap {
+    padding: 20px 16px 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-box {
+    width: 100%;
+    padding: 13px 16px 13px 44px;
+    border: 2px solid var(--green-mid);
+    border-radius: 50px;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+
+  .search-box:focus { border-color: var(--green); }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-20%);
+    font-size: 18px;
+    pointer-events: none;
+    color: var(--text-light);
+  }
+
+  .count-label {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    padding: 8px 0 4px;
+  }
+
+  .list {
+    padding: 8px 16px 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(26,158,63,0.08);
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,158,63,0.15);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .card-called {
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .card-office {
+    font-size: 11px;
+    color: var(--text-light);
+  }
+
+  .card-arrow {
+    color: var(--green-mid);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .group-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: 0.08em;
+    padding: 8px 4px 4px;
+    margin-top: 4px;
+  }
+
+  .no-result {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+    font-size: 14px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-leaf"></div>
+  <div>
+    <small>株式会社フレッシュ青果</small>
+    <h1>私のトリセツ</h1>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input class="search-box" type="search" id="search" placeholder="名前・営業所で検索" oninput="doSearch()">
+</div>
+<p class="count-label" id="count"></p>
+
+<div class="list" id="list"></div>
+<p class="no-result" id="noResult">該当するメンバーが見つかりません</p>
+
+<script>
+  if (!sessionStorage.getItem('auth')) {
+    window.location.href = 'index.html';
+  }
+
+  const groups = [
+    {
+      label: '本社',
+      members: [
+        { id: 'nishihara_ryoichi', name: '西原 亮一',  called: '亮一社長' },
+        { id: 'yamada_mamoru',     name: '山田 守',     called: '部長' },
+        { id: 'cho_yusuke',        name: '長 祐介',     called: '長さん・長くん' },
+        { id: 'sato_mai',          name: '佐藤 万愛',   called: 'まいさん♡' },
+        { id: 'furuzato_mao',      name: '古里 真生',   called: '古里さん' },
+        { id: 'horinouchi_kano',   name: '堀之内 叶',   called: '堀之内さん' },
+      ]
+    },
+    {
+      label: '宮崎営業所',
+      members: [
+        { id: 'nishikawa_shuichi', name: '西川 修一', called: '西川所長' },
+        { id: 'nakadake_shin',     name: '中武 慎援', called: '中武係長・中武さん' },
+      ]
+    },
+    {
+      label: '山口営業所',
+      members: [
+        { id: 'tanaka_hisakazu', name: '田中 寿和', called: '田中所長' },
+        { id: 'kubo_tomofumi',   name: '久保 智史', called: '久保さん・久保主任' },
+      ]
+    },
+    {
+      label: '東海静岡営業所',
+      members: [
+        { id: 'tanaka_takashi',  name: '田中 孝史',   called: '所長・たかし' },
+        { id: 'tokuda_shintaro', name: '徳田 晋太郎', called: '徳田次長' },
+      ]
+    },
+    {
+      label: '東海名古屋営業所',
+      members: [
+        { id: 'tanaka_kazuya',  name: '田中 和也', called: '所長' },
+        { id: 'sugiyama_taemi', name: '杉山 妙美', called: '杉山さん' },
+      ]
+    },
+    {
+      label: '大分営業所',
+      members: [
+        { id: 'matsumoto_takuya', name: '松元 琢也', called: '松元所長・たくや' },
+        { id: 'sakurai_takumi',   name: '櫻井 拓実', called: 'たくみ・たくちゃん' },
+      ]
+    },
+    {
+      label: '岡山営業所',
+      members: [
+        { id: 'watanabe_takayuki', name: '渡辺 隆之', called: '渡辺さん' },
+        { id: 'nishi_yutaro',      name: '西 裕太郎', called: '所長・西所長' },
+      ]
+    },
+    {
+      label: '長崎営業所',
+      members: [
+        { id: 'nishihara_yoshito', name: '西原 喜人', called: '喜人所長・喜人部長' },
+      ]
+    },
+  ];
+
+  // 検索用フラット配列
+  const members = groups.flatMap(g => g.members.map(m => ({ ...m, office: g.label })));
+
+  function getInitial(name) {
+    return name.replace(/\s/g, '')[0];
+  }
+
+  function cardHTML(m, i) {
+    return `
+      <a class="card" href="${m.id}.html" style="animation-delay:${i * 0.04}s">
+        <div class="avatar">${getInitial(m.name)}</div>
+        <div class="card-info">
+          <div class="card-name">${m.name}</div>
+          <div class="card-called">「${m.called}」と呼んでください</div>
+          <div class="card-office">${m.office}</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>`;
+  }
+
+  function render(filtered) {
+    const el = document.getElementById('list');
+    const noResult = document.getElementById('noResult');
+    document.getElementById('count').textContent = `${filtered.length}名のトリセツ`;
+
+    if (filtered.length === 0) {
+      el.innerHTML = '';
+      noResult.style.display = 'block';
+      return;
+    }
+    noResult.style.display = 'none';
+    el.innerHTML = filtered.map((m, i) => cardHTML(m, i)).join('');
+  }
+
+  function renderGroups() {
+    const el = document.getElementById('list');
+    const noResult = document.getElementById('noResult');
+    let total = 0;
+    let html = '';
+    let cardIdx = 0;
+    groups.forEach(g => {
+      html += `<div class="group-label">📍 ${g.label}</div>`;
+      g.members.forEach(m => {
+        html += cardHTML({ ...m, office: g.label }, cardIdx++);
+        total++;
+      });
+    });
+    noResult.style.display = 'none';
+    document.getElementById('count').textContent = `${total}名のトリセツ`;
+    el.innerHTML = html;
+  }
+
+  function doSearch() {
+    const q = document.getElementById('search').value.trim();
+    if (!q) { renderGroups(); return; }
+    const filtered = members.filter(m =>
+      m.name.includes(q) || m.office.includes(q) || m.called.includes(q)
+    );
+    render(filtered);
+  }
+
+  renderGroups();
+</script>
+</body>
+</html>
