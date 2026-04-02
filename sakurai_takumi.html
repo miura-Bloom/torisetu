@@ -84,7 +84,6 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 16px;
   }
 
   .avatar {
@@ -106,24 +105,6 @@
     font-weight: 900;
     color: white;
     letter-spacing: 0.05em;
-  }
-
-  .called-badge {
-    margin-top: 8px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px;
-    padding: 10px 16px;
-    color: white;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-  .called-badge strong {
-    display: block;
-    font-size: 11px;
-    opacity: 0.75;
-    margin-bottom: 2px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
   }
 
   .content {
@@ -153,6 +134,7 @@
   .section:nth-child(3) { animation-delay: 0.15s; }
   .section:nth-child(4) { animation-delay: 0.2s; }
   .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
 
   .section-label {
     font-size: 10px;
@@ -233,14 +215,16 @@
       <div class="avatar">櫻</div>
       <h1>櫻井 拓実</h1>
     </div>
-    <div class="called-badge">
-      <strong>呼ばれたい名前</strong>
-      たくみ・たくちゃん（フレンドリーな感じで！）
-    </div>
   </div>
 </div>
 
 <div class="content">
+
+  <div class="section">
+    <div class="section-label">A-1</div>
+    <div class="section-title">🏷️ 呼ばれたい名前</div>
+    <div class="section-body">たくみ / たくちゃん。あえて、下の名前で呼んでもらいフレンドリーな感じで会話ができると思います。</div>
+  </div>
 
   <div class="section">
     <div class="section-label">A-5</div>
