@@ -148,6 +148,11 @@
     flex-shrink: 0;
   }
 
+  /* 新卒は少し違う色で区別 */
+  .avatar.shinnyuu {
+    background: #0d6b27;
+  }
+
   .card-info {
     flex: 1;
     min-width: 0;
@@ -169,6 +174,17 @@
   .card-office {
     font-size: 11px;
     color: var(--text-light);
+  }
+
+  .card-tag {
+    font-size: 10px;
+    color: var(--white);
+    background: var(--green);
+    border-radius: 50px;
+    padding: 2px 8px;
+    display: inline-block;
+    margin-top: 3px;
+    font-weight: 700;
   }
 
   .card-arrow {
@@ -207,7 +223,7 @@
 
 <div class="search-wrap">
   <span class="search-icon">🔍</span>
-  <input class="search-box" type="search" id="search" placeholder="名前・営業所で検索" oninput="doSearch()">
+  <input class="search-box" type="search" id="search" placeholder="名前・営業所・2026年新卒で検索" oninput="doSearch()">
 </div>
 <p class="count-label" id="count"></p>
 
@@ -236,27 +252,37 @@
       members: [
         { id: 'nishikawa_shuichi', name: '西川 修一', called: '西川所長' },
         { id: 'nakadake_shin',     name: '中武 慎援', called: '中武係長・中武さん' },
+        { id: 'sato_souya',        name: '佐藤 奏弥', called: '奏弥くん',        tags: '2026年新卒' },
+        { id: 'fujino_daichi',     name: '藤野 大地', called: '大地・藤野',      tags: '2026年新卒' },
+        { id: 'furusato_noa',      name: '古里 暖空', called: 'のあ',            tags: '2026年新卒' },
+        { id: 'kuroki_koga',       name: '黒木 滉我', called: '黒木くん',        tags: '2026年新卒' },
       ]
     },
     {
       label: '山口営業所',
       members: [
-        { id: 'tanaka_hisakazu', name: '田中 寿和', called: '田中所長' },
-        { id: 'kubo_tomofumi',   name: '久保 智史', called: '久保さん・久保主任' },
+        { id: 'tanaka_hisakazu',   name: '田中 寿和', called: '田中所長' },
+        { id: 'kubo_tomofumi',     name: '久保 智史', called: '久保さん・久保主任' },
+        { id: 'kawahashi_daiki',   name: '川橋 大輝', called: '大（だい）',      tags: '2026年新卒' },
       ]
     },
     {
       label: '東海静岡営業所',
       members: [
-        { id: 'tanaka_takashi',  name: '田中 孝史',   called: '所長・たかし' },
-        { id: 'tokuda_shintaro', name: '徳田 晋太郎', called: '徳田次長' },
+        { id: 'tanaka_takashi',    name: '田中 孝史',   called: '所長・たかし' },
+        { id: 'tokuda_shintaro',   name: '徳田 晋太郎', called: '徳田次長' },
+        { id: 'kimura_soa',        name: '木村 そあ',   called: 'そあ・木村',    tags: '2026年新卒' },
+        { id: 'hajizume_yushi',    name: '橋詰 悠司',   called: 'はっしー',      tags: '2026年新卒' },
+        { id: 'shimizu_yurito',    name: '清水 優凛柊', called: '清水',          tags: '2026年新卒' },
+        { id: 'maejima_riko',      name: '前島 凛心',   called: 'りこ',          tags: '2026年新卒' },
       ]
     },
     {
       label: '東海名古屋営業所',
       members: [
-        { id: 'tanaka_kazuya',  name: '田中 和也', called: '所長' },
+        { id: 'tanaka_kazuya',   name: '田中 和也', called: '所長' },
         { id: 'sugiyama_taemi', name: '杉山 妙美', called: '杉山さん' },
+        { id: 'ueno_yumeka',    name: '上野 夢華', called: '夢ちゃん',          tags: '2026年新卒' },
       ]
     },
     {
@@ -264,6 +290,7 @@
       members: [
         { id: 'matsumoto_takuya', name: '松元 琢也', called: '松元所長・たくや' },
         { id: 'sakurai_takumi',   name: '櫻井 拓実', called: 'たくみ・たくちゃん' },
+        { id: 'anan_koki',        name: '阿南 幸輝', called: 'あーちゃん',      tags: '2026年新卒' },
       ]
     },
     {
@@ -271,31 +298,65 @@
       members: [
         { id: 'watanabe_takayuki', name: '渡辺 隆之', called: '渡辺さん' },
         { id: 'nishi_yutaro',      name: '西 裕太郎', called: '所長・西所長' },
+        { id: 'yusuki_ryusei',     name: '檮木 龍聖', called: 'ゆすき・りゅうせい', tags: '2026年新卒' },
       ]
     },
     {
       label: '長崎営業所',
       members: [
-        { id: 'nishihara_yoshito', name: '西原 喜人', called: '喜人所長・喜人部長' },
+        { id: 'nishihara_yoshito', name: '西原 喜人',   called: '喜人所長・喜人部長' },
+        { id: 'ichiyama_shota',    name: '市山 翔太',   called: '市山くん',      tags: '2026年新卒' },
+        { id: 'sugahara_ryuto',    name: '菅原 琉斗',   called: '琉斗',          tags: '2026年新卒' },
+        { id: 'kiyuna_kyoka',      name: '喜友名 杏華', called: 'きょうか',      tags: '2026年新卒' },
+      ]
+    },
+    {
+      label: '沖縄営業所',
+      members: [
+        { id: 'kudaka_shuto', name: '久高 柊人', called: 'くだしゅー', tags: '2026年新卒' },
+      ]
+    },
+    {
+      label: '鹿児島本店',
+      members: [
+        { id: 'idichi_ren',   name: '伊知地 蓮', called: 'れん・いっちー', tags: '2026年新卒' },
+        { id: 'nakano_koki',  name: '中野 凰葵', called: 'こうき',        tags: '2026年新卒' },
+      ]
+    },
+    {
+      label: '関西大阪本店',
+      members: [
+        { id: 'shiroi_yuki', name: '城井 優希', called: '城井さん', tags: '2026年新卒' },
+      ]
+    },
+    {
+      label: '関東平塚営業所',
+      members: [
+        { id: 'onozawa_kodai', name: '小野澤 滉大', called: 'こうだい', tags: '2026年新卒' },
       ]
     },
   ];
 
-  // 検索用フラット配列
-  const members = groups.flatMap(g => g.members.map(m => ({ ...m, office: g.label })));
+  // 検索用フラット配列（tagsも含める）
+  const members = groups.flatMap(g =>
+    g.members.map(m => ({ ...m, office: g.label, tags: m.tags || '' }))
+  );
 
   function getInitial(name) {
     return name.replace(/\s/g, '')[0];
   }
 
   function cardHTML(m, i) {
+    const isShinnyuu = !!m.tags;
+    const tagHTML = isShinnyuu ? `<span class="card-tag">🌱 ${m.tags}</span>` : '';
     return `
       <a class="card" href="${m.id}.html" style="animation-delay:${i * 0.04}s">
-        <div class="avatar">${getInitial(m.name)}</div>
+        <div class="avatar${isShinnyuu ? ' shinnyuu' : ''}">${getInitial(m.name)}</div>
         <div class="card-info">
           <div class="card-name">${m.name}</div>
           <div class="card-called">「${m.called}」と呼んでください</div>
           <div class="card-office">${m.office}</div>
+          ${tagHTML}
         </div>
         <div class="card-arrow">›</div>
       </a>`;
@@ -324,7 +385,7 @@
     groups.forEach(g => {
       html += `<div class="group-label">📍 ${g.label}</div>`;
       g.members.forEach(m => {
-        html += cardHTML({ ...m, office: g.label }, cardIdx++);
+        html += cardHTML({ ...m, office: g.label, tags: m.tags || '' }, cardIdx++);
         total++;
       });
     });
@@ -337,7 +398,10 @@
     const q = document.getElementById('search').value.trim();
     if (!q) { renderGroups(); return; }
     const filtered = members.filter(m =>
-      m.name.includes(q) || m.office.includes(q) || m.called.includes(q)
+      m.name.includes(q) ||
+      m.office.includes(q) ||
+      m.called.includes(q) ||
+      m.tags.includes(q)
     );
     render(filtered);
   }
