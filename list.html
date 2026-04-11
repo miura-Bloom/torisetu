@@ -1,215 +1,132 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>メンバー一覧 | 私のトリセツ</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --green: #1a9e3f;
-    --green-dark: #147a30;
-    --green-light: #e8f5eb;
-    --green-mid: #c8e6ce;
-    --white: #ffffff;
-    --text: #1a2e1c;
-    --text-light: #4a6b4e;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--green-light);
-    min-height: 100vh;
-    color: var(--text);
-  }
-
-  header {
-    background: var(--green);
-    color: var(--white);
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(26,158,63,0.3);
-  }
-
-  .header-leaf {
-    width: 32px; height: 32px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    flex-shrink: 0;
-  }
-
-  header h1 {
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 0.05em;
-  }
-
-  header small {
-    font-size: 11px;
-    opacity: 0.8;
-    display: block;
-    font-weight: 400;
-  }
-
-  .search-wrap {
-    padding: 20px 16px 8px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .search-box {
-    width: 100%;
-    padding: 13px 16px 13px 44px;
-    border: 2px solid var(--green-mid);
-    border-radius: 50px;
-    font-size: 15px;
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--white);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s;
-    position: relative;
-  }
-
-  .search-box:focus { border-color: var(--green); }
-
-  .search-wrap {
-    position: relative;
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 30px;
-    top: 50%;
-    transform: translateY(-20%);
-    font-size: 18px;
-    pointer-events: none;
-    color: var(--text-light);
-  }
-
-  .count-label {
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-light);
-    padding: 8px 0 4px;
-  }
-
-  .list {
-    padding: 8px 16px 40px;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    color: var(--text);
-    box-shadow: 0 2px 8px rgba(26,158,63,0.08);
-    transition: transform 0.15s, box-shadow 0.15s;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(26,158,63,0.15);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .avatar {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: var(--green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 900;
-    color: var(--white);
-    flex-shrink: 0;
-  }
-
-  /* 新卒は少し違う色で区別 */
-  .avatar.shinnyuu {
-    background: #0d6b27;
-  }
-
-  .card-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .card-name {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 3px;
-  }
-
-  .card-called {
-    font-size: 12px;
-    color: var(--green);
-    font-weight: 500;
-    margin-bottom: 2px;
-  }
-
-  .card-office {
-    font-size: 11px;
-    color: var(--text-light);
-  }
-
-  .card-tag {
-    font-size: 10px;
-    color: var(--white);
-    background: var(--green);
-    border-radius: 50px;
-    padding: 2px 8px;
-    display: inline-block;
-    margin-top: 3px;
-    font-weight: 700;
-  }
-
-  .card-arrow {
-    color: var(--green-mid);
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .group-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--green-dark);
-    letter-spacing: 0.08em;
-    padding: 8px 4px 4px;
-    margin-top: 4px;
-  }
-
-  .no-result {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-light);
-    font-size: 14px;
-    display: none;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メンバー一覧 | 私のトリセツ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #1a9e3f;
+      --green-dark: #147a30;
+      --green-light: #e8f5eb;
+      --green-mid: #c8e6ce;
+      --white: #ffffff;
+      --text: #1a2e1c;
+      --text-light: #4a6b4e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--green-light);
+      min-height: 100vh;
+      color: var(--text);
+    }
+    header {
+      background: var(--green);
+      color: var(--white);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(26,158,63,0.3);
+    }
+    .header-leaf {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      flex-shrink: 0;
+    }
+    header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.05em; }
+    header small { font-size: 11px; opacity: 0.8; display: block; font-weight: 400; }
+    .search-wrap { padding: 20px 16px 8px; max-width: 600px; margin: 0 auto; }
+    .search-box {
+      width: 100%;
+      padding: 13px 16px 13px 44px;
+      border: 2px solid var(--green-mid);
+      border-radius: 50px;
+      font-size: 15px;
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .search-box:focus { border-color: var(--green); }
+    .search-wrap { position: relative; }
+    .search-icon {
+      position: absolute;
+      left: 30px; top: 50%;
+      transform: translateY(-20%);
+      font-size: 18px;
+      pointer-events: none;
+      color: var(--text-light);
+    }
+    .count-label { text-align: center; font-size: 12px; color: var(--text-light); padding: 8px 0 4px; }
+    .list {
+      padding: 8px 16px 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(26,158,63,0.08);
+      transition: transform 0.15s, box-shadow 0.15s;
+      animation: fadeUp 0.4s ease both;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,158,63,0.15); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .avatar.shinnyuu { background: #0d6b27; }
+    .card-info { flex: 1; min-width: 0; }
+    .card-name { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .card-called { font-size: 12px; color: var(--green); font-weight: 500; margin-bottom: 2px; }
+    .card-office { font-size: 11px; color: var(--text-light); }
+    .card-tag {
+      font-size: 10px; color: var(--white);
+      background: var(--green);
+      border-radius: 50px;
+      padding: 2px 8px;
+      display: inline-block;
+      margin-top: 3px;
+      font-weight: 700;
+    }
+    .card-arrow { color: var(--green-mid); font-size: 20px; flex-shrink: 0; }
+    .group-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--green-dark);
+      letter-spacing: 0.08em;
+      padding: 8px 4px 4px;
+      margin-top: 4px;
+    }
+    .no-result { text-align: center; padding: 60px 20px; color: var(--text-light); font-size: 14px; display: none; }
+  </style>
 </head>
 <body>
 
@@ -226,187 +143,146 @@
   <input class="search-box" type="search" id="search" placeholder="名前・営業所・2026年新卒で検索" oninput="doSearch()">
 </div>
 <p class="count-label" id="count"></p>
-
 <div class="list" id="list"></div>
 <p class="no-result" id="noResult">該当するメンバーが見つかりません</p>
 
 <script>
-  if (!sessionStorage.getItem('auth')) {
-    window.location.href = 'index.html';
-  }
+if (!sessionStorage.getItem('auth')) { window.location.href = 'index.html'; }
 
-  const groups = [
-    {
-      label: '本社',
-      members: [
-        { id: 'nishihara_ryoichi', name: '西原 亮一',  called: '亮一社長' },
-        { id: 'yamada_mamoru',     name: '山田 守',     called: '部長' },
-        { id: 'cho_yusuke',        name: '長 祐介',     called: '長さん・長くん' },
-        { id: 'sato_mai',          name: '佐藤 万愛',   called: 'まいさん♡' },
-        { id: 'furuzato_mao',      name: '古里 真生',   called: '古里さん' },
-        { id: 'horinouchi_kano',   name: '堀之内 叶',   called: '堀之内さん' },
-      ]
-    },
-    {
-      label: '宮崎営業所',
-      members: [
-        { id: 'nishikawa_shuichi', name: '西川 修一', called: '西川所長' },
-        { id: 'nakadake_shin',     name: '中武 慎援', called: '中武係長・中武さん' },
-        { id: 'sato_souya',        name: '佐藤 奏弥', called: '奏弥くん',        tags: '2026年新卒' },
-        { id: 'fujino_daichi',     name: '藤野 大地', called: '大地・藤野',      tags: '2026年新卒' },
-        { id: 'furusato_noa',      name: '古里 暖空', called: 'のあ',            tags: '2026年新卒' },
-        { id: 'kuroki_koga',       name: '黒木 滉我', called: '黒木くん',        tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '山口営業所',
-      members: [
-        { id: 'tanaka_hisakazu',   name: '田中 寿和', called: '田中所長' },
-        { id: 'kubo_tomofumi',     name: '久保 智史', called: '久保さん・久保主任' },
-        { id: 'kawahashi_daiki',   name: '川橋 大輝', called: '大（だい）',      tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '東海静岡営業所',
-      members: [
-        { id: 'tanaka_takashi',    name: '田中 孝史',   called: '所長・たかし' },
-        { id: 'tokuda_shintaro',   name: '徳田 晋太郎', called: '徳田次長' },
-        { id: 'kimura_soa',        name: '木村 そあ',   called: 'そあ・木村',    tags: '2026年新卒' },
-        { id: 'hajizume_yushi',    name: '橋詰 悠司',   called: 'はっしー',      tags: '2026年新卒' },
-        { id: 'shimizu_yurito',    name: '清水 優凛柊', called: '清水',          tags: '2026年新卒' },
-        { id: 'maejima_riko',      name: '前島 凛心',   called: 'りこ',          tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '東海名古屋営業所',
-      members: [
-        { id: 'tanaka_kazuya',   name: '田中 和也', called: '所長' },
-        { id: 'sugiyama_taemi', name: '杉山 妙美', called: '杉山さん' },
-        { id: 'ueno_yumeka',    name: '上野 夢華', called: '夢ちゃん',          tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '大分営業所',
-      members: [
-        { id: 'matsumoto_takuya', name: '松元 琢也', called: '松元所長・たくや' },
-        { id: 'sakurai_takumi',   name: '櫻井 拓実', called: 'たくみ・たくちゃん' },
-        { id: 'anan_koki',        name: '阿南 幸輝', called: 'あーちゃん',      tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '岡山営業所',
-      members: [
-        { id: 'watanabe_takayuki', name: '渡辺 隆之', called: '渡辺さん' },
-        { id: 'nishi_yutaro',      name: '西 裕太郎', called: '所長・西所長' },
-        { id: 'yusuki_ryusei',     name: '檮木 龍聖', called: 'ゆすき・りゅうせい', tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '長崎営業所',
-      members: [
-        { id: 'nishihara_yoshito', name: '西原 喜人',   called: '喜人所長・喜人部長' },
-        { id: 'ichiyama_shota',    name: '市山 翔太',   called: '市山くん',      tags: '2026年新卒' },
-        { id: 'sugahara_ryuto',    name: '菅原 琉斗',   called: '琉斗',          tags: '2026年新卒' },
-        { id: 'kiyuna_kyoka',      name: '喜友名 杏華', called: 'きょうか',      tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '沖縄営業所',
-      members: [
-        { id: 'kudaka_shuto', name: '久高 柊人', called: 'くだしゅー', tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '鹿児島本店',
-      members: [
-        { id: 'idichi_ren',   name: '伊知地 蓮', called: 'れん・いっちー', tags: '2026年新卒' },
-        { id: 'nakano_koki',  name: '中野 凰葵', called: 'こうき',        tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '関西大阪本店',
-      members: [
-        { id: 'shiroi_yuki', name: '城井 優希', called: '城井さん', tags: '2026年新卒' },
-      ]
-    },
-    {
-      label: '関東平塚営業所',
-      members: [
-        { id: 'onozawa_kodai', name: '小野澤 滉大', called: 'こうだい', tags: '2026年新卒' },
-      ]
-    },
-  ];
+const groups = [
+  { label: '本社', members: [
+    { id: 'nishihara_ryoichi', name: '西原 亮一', called: '亮一社長' },
+    { id: 'yamada_mamoru',    name: '山田 守',   called: '部長' },
+    { id: 'cho_yusuke',       name: '長 祐介',   called: '長さん・長くん' },
+    { id: 'sato_mai',         name: '佐藤 万愛', called: 'まいさん♡' },
+    { id: 'furuzato_mao',     name: '古里 真生', called: '古里さん' },
+    { id: 'horinouchi_kano',  name: '堀之内 叶', called: '堀之内さん' },
+  ]},
+  { label: '宮崎営業所', members: [
+    { id: 'nishikawa_shuichi', name: '西川 修一',   called: '西川所長' },
+    { id: 'nakadake_shin',     name: '中武 慎援',   called: '中武係長・中武さん' },
+    { id: 'sato_souya',        name: '佐藤 奏弥',   called: '奏弥くん',        tags: '2026年新卒' },
+    { id: 'fujino_daichi',     name: '藤野 大地',   called: '大地・藤野',      tags: '2026年新卒' },
+    { id: 'furusato_noa',      name: '古里 暖空',   called: 'のあ',            tags: '2026年新卒' },
+    { id: 'kuroki_koga',       name: '黒木 滉我',   called: '黒木くん',        tags: '2026年新卒' },
+  ]},
+  { label: '山口営業所', members: [
+    { id: 'tanaka_hisakazu', name: '田中 寿和', called: '田中所長' },
+    { id: 'kubo_tomofumi',   name: '久保 智史', called: '久保さん・久保主任' },
+    { id: 'kawahashi_daiki', name: '川橋 大輝', called: '大（だい）', tags: '2026年新卒' },
+  ]},
+  { label: '東海静岡営業所', members: [
+    { id: 'tanaka_takashi',   name: '田中 孝史',   called: '所長・たかし' },
+    { id: 'tokuda_shintaro',  name: '徳田 晋太郎', called: '徳田次長' },
+    { id: 'kimura_soa',       name: '木村 そあ',   called: 'そあ・木村',  tags: '2026年新卒' },
+    { id: 'hajizume_yushi',   name: '橋詰 悠司',   called: 'はっしー',    tags: '2026年新卒' },
+    { id: 'shimizu_yurito',   name: '清水 優凛柊', called: '清水',        tags: '2026年新卒' },
+    { id: 'maejima_riko',     name: '前島 凛心',   called: 'りこ',        tags: '2026年新卒' },
+  ]},
+  { label: '東海名古屋営業所', members: [
+    { id: 'tanaka_kazuya',   name: '田中 和也', called: '所長' },
+    { id: 'sugiyama_taemi',  name: '杉山 妙美', called: '杉山さん' },
+    { id: 'ueno_yumeka',     name: '上野 夢華', called: '夢ちゃん', tags: '2026年新卒' },
+  ]},
+  { label: '大分営業所', members: [
+    { id: 'matsumoto_takuya', name: '松元 琢也', called: '松元所長・たくや' },
+    { id: 'sakurai_takumi',   name: '櫻井 拓実', called: 'たくみ・たくちゃん' },
+    { id: 'anan_koki',        name: '阿南 幸輝', called: 'あーちゃん', tags: '2026年新卒' },
+    { id: 'chikada_shinpei',  name: '近田 伸平', called: '近田係長' },
+  ]},
+  { label: '岡山営業所', members: [
+    { id: 'watanabe_takayuki', name: '渡辺 隆之', called: '渡辺さん' },
+    { id: 'nishi_yutaro',      name: '西 裕太郎', called: '所長・西所長' },
+    { id: 'yusuki_ryusei',     name: '檮木 龍聖', called: 'ゆすき・りゅうせい', tags: '2026年新卒' },
+  ]},
+  { label: '長崎営業所', members: [
+    { id: 'nishihara_yoshito', name: '西原 喜人',   called: '喜人所長・喜人部長' },
+    { id: 'matsushita_daiki',  name: '松下 大樹',   called: '松下' },
+    { id: 'ichiyama_shota',    name: '市山 翔太',   called: '市山くん',  tags: '2026年新卒' },
+    { id: 'sugahara_ryuto',    name: '菅原 琉斗',   called: '琉斗',      tags: '2026年新卒' },
+    { id: 'kiyuna_kyoka',      name: '喜友名 杏華', called: 'きょうか',  tags: '2026年新卒' },
+  ]},
+  { label: '沖縄営業所', members: [
+    { id: 'miura_ken',    name: '三浦 謙',   called: '三浦所長・けん所長' },
+    { id: 'kinjo_hitoshi', name: '金城 仁志', called: 'ひとし・ひとしさん' },
+    { id: 'kudaka_shuto', name: '久高 柊人', called: 'くだしゅー', tags: '2026年新卒' },
+  ]},
+  { label: '鹿児島本店', members: [
+    { id: 'fujisaki_yuhi', name: '藤崎 優飛', called: 'ゆうひ' },
+    { id: 'idichi_ren',    name: '伊知地 蓮', called: 'れん・いっちー', tags: '2026年新卒' },
+    { id: 'nakano_koki',   name: '中野 凰葵', called: 'こうき',         tags: '2026年新卒' },
+  ]},
+  { label: '関西大阪本店', members: [
+    { id: 'hoshi_naoto',   name: '星 直人', called: '店長・星' },
+    { id: 'minami_noriko', name: '南 紀子', called: '南さん' },
+    { id: 'shiroi_yuki',   name: '城井 優希', called: '城井さん', tags: '2026年新卒' },
+  ]},
+  { label: '関東平塚営業所', members: [
+    { id: 'date_toshimasa', name: '伊達 俊将',   called: '所長・俊将' },
+    { id: 'onozawa_kodai',  name: '小野澤 滉大', called: 'こうだい', tags: '2026年新卒' },
+  ]},
+  { label: '福岡営業所', members: [
+    { id: 'fukushima_naoki', name: '福島 直樹', called: '所長' },
+    { id: 'kawata_hiroki',   name: '瓦田 弘樹', called: '瓦田さん' },
+    { id: 'kuriya_naoki',    name: '栗屋 直樹', called: '栗屋さん' },
+  ]},
+];
 
-  // 検索用フラット配列（tagsも含める）
-  const members = groups.flatMap(g =>
-    g.members.map(m => ({ ...m, office: g.label, tags: m.tags || '' }))
-  );
+const members = groups.flatMap(g => g.members.map(m => ({ ...m, office: g.label, tags: m.tags || '' })));
 
-  function getInitial(name) {
-    return name.replace(/\s/g, '')[0];
-  }
+function getInitial(name) { return name.replace(/\s/g, '')[0]; }
 
-  function cardHTML(m, i) {
-    const isShinnyuu = !!m.tags;
-    const tagHTML = isShinnyuu ? `<span class="card-tag">🌱 ${m.tags}</span>` : '';
-    return `
-      <a class="card" href="${m.id}.html" style="animation-delay:${i * 0.04}s">
-        <div class="avatar${isShinnyuu ? ' shinnyuu' : ''}">${getInitial(m.name)}</div>
-        <div class="card-info">
-          <div class="card-name">${m.name}</div>
-          <div class="card-called">「${m.called}」と呼んでください</div>
-          <div class="card-office">${m.office}</div>
-          ${tagHTML}
-        </div>
-        <div class="card-arrow">›</div>
-      </a>`;
-  }
+function cardHTML(m, i) {
+  const isShinnyuu = !!m.tags;
+  const tagHTML = isShinnyuu ? `<span class="card-tag">🌱 ${m.tags}</span>` : '';
+  return `
+    <a class="card" href="${m.id}.html" style="animation-delay:${i * 0.04}s">
+      <div class="avatar${isShinnyuu ? ' shinnyuu' : ''}">${getInitial(m.name)}</div>
+      <div class="card-info">
+        <div class="card-name">${m.name}</div>
+        <div class="card-called">「${m.called}」と呼んでください</div>
+        <div class="card-office">${m.office}</div>
+        ${tagHTML}
+      </div>
+      <div class="card-arrow">›</div>
+    </a>`;
+}
 
-  function render(filtered) {
-    const el = document.getElementById('list');
-    const noResult = document.getElementById('noResult');
-    document.getElementById('count').textContent = `${filtered.length}名のトリセツ`;
+function render(filtered) {
+  const el = document.getElementById('list');
+  const noResult = document.getElementById('noResult');
+  document.getElementById('count').textContent = `${filtered.length}名のトリセツ`;
+  if (filtered.length === 0) { el.innerHTML = ''; noResult.style.display = 'block'; return; }
+  noResult.style.display = 'none';
+  el.innerHTML = filtered.map((m, i) => cardHTML(m, i)).join('');
+}
 
-    if (filtered.length === 0) {
-      el.innerHTML = '';
-      noResult.style.display = 'block';
-      return;
-    }
-    noResult.style.display = 'none';
-    el.innerHTML = filtered.map((m, i) => cardHTML(m, i)).join('');
-  }
-
-  function renderGroups() {
-    const el = document.getElementById('list');
-    const noResult = document.getElementById('noResult');
-    let total = 0;
-    let html = '';
-    let cardIdx = 0;
-    groups.forEach(g => {
-      html += `<div class="group-label">📍 ${g.label}</div>`;
-      g.members.forEach(m => {
-        html += cardHTML({ ...m, office: g.label, tags: m.tags || '' }, cardIdx++);
-        total++;
-      });
+function renderGroups() {
+  const el = document.getElementById('list');
+  const noResult = document.getElementById('noResult');
+  let total = 0; let html = ''; let cardIdx = 0;
+  groups.forEach(g => {
+    html += `<div class="group-label">📍 ${g.label}</div>`;
+    g.members.forEach(m => {
+      html += cardHTML({ ...m, office: g.label, tags: m.tags || '' }, cardIdx++);
+      total++;
     });
-    noResult.style.display = 'none';
-    document.getElementById('count').textContent = `${total}名のトリセツ`;
-    el.innerHTML = html;
-  }
+  });
+  noResult.style.display = 'none';
+  document.getElementById('count').textContent = `${total}名のトリセツ`;
+  el.innerHTML = html;
+}
 
-  function doSearch() {
-    const q = document.getElementById('search').value.trim();
-    if (!q) { renderGroups(); return; }
-    const filtered = members.filter(m =>
-      m.name.includes(q) ||
-      m.office.includes(q) ||
-      m.called.includes(q) ||
-      m.tags.includes(q)
-    );
-    render(filtered);
-  }
+function doSearch() {
+  const q = document.getElementById('search').value.trim();
+  if (!q) { renderGroups(); return; }
+  const filtered = members.filter(m =>
+    m.name.includes(q) || m.office.includes(q) || m.called.includes(q) || m.tags.includes(q)
+  );
+  render(filtered);
+}
 
-  renderGroups();
+renderGroups();
 </script>
 </body>
 </html>
